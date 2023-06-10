@@ -1,21 +1,17 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
-import styled from 'styled-components'
-import Layout from '../../components/Layout'
-
+import 'semantic-ui-css/semantic.min.css'
+import Footer from '../../components/Footer'
+import Top from '../../components/Top'
 export default function App({ Component, pageProps }: AppProps) {
   return (
-      <div>
-        <Layout>
-          
-          <Component {...pageProps} />
-        </Layout>
-      </div>
+    <div style={{ width: 1000, margin: "0 auto" }}>
+        <Top />
+        <Component {...pageProps} />
+        <Footer />
+    </div>
   )
 }
 
 
-const Title=styled.div`
-  font-size:2rem;
-  font-weight:900;
-`
+
