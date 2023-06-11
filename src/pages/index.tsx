@@ -5,7 +5,9 @@ import LoginModal from '../../components/Modal'
 import { useEffect, useState } from 'react'
 import ItemList from '../../components/ItemList'
 // import styles from '@/styles/Home.module.css'
-
+import { Divider, Header, Loader } from "semantic-ui-react";
+import NotFound from './404'
+import { useRouter } from 'next/router'
 const inter = Inter({ subsets: ['latin'] })
 
 
@@ -24,9 +26,9 @@ export interface Data{
 
 
 export default function Home() {
-  const [list,setList]=useState([])
-  const API_URL =
-    "http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline";
+  const [list,setList]=useState<Data[]>([])
+  const [isLoading,setIsloading]=useState(true)
+  const API_URL ="http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline";
     const getData=async()=>{
         const response=await fetch(API_URL)
         const result=await response.json()
@@ -41,6 +43,7 @@ export default function Home() {
           description:value.description
         }))
         setList(filteredResult)
+        setIsloading(false)
     }
 
     useEffect(()=>{
@@ -49,8 +52,17 @@ export default function Home() {
 
   return (
     <div>
-      Home페ㅣ이지 입니다.
       {/* <LoginModal/> */}
+      <Head>
+        <title>Home | 천재현</title>
+      </Head>
+      {isLoading && (
+        <div style={{ padding: "300px 0" }}>
+          <Loader inline="centered" active>
+            Loading
+          </Loader>
+        </div>
+      )}
       <ItemList list={list}/>
     </div>
   )

@@ -1,14 +1,24 @@
-import { Button, Header } from "semantic-ui-react";
+import { Button, Header, Loader } from "semantic-ui-react";
 import styles from "./Item.module.css";
 import { Data } from "@/pages";
 import { useRouter } from "next/router";
+import { useEffect, useState } from 'react'
+
 interface ItemProps {
-    item: Data;
+    item: Data|null;
   }
   
-export default function Item({ item }:ItemProps) {
-    console.log(item)
-    const router=useRouter()
+export default function Item({ item }:any) {
+  console.log(item)
+  const router=useRouter()
+  // useEffect(()=>{
+  //   if(item.status===404){
+  //     router.push('/404')
+  //   }
+  // },[])
+  if (!item) {
+    return <Loader>loading..</Loader>; // 혹은 로딩 상태를 나타내는 컴포넌트 등을 반환할 수 있습니다.
+  }
   const {
     id,
     name,
@@ -20,8 +30,7 @@ export default function Item({ item }:ItemProps) {
     product_type,
     product_link,
   } = item;
-  console.log(item)
-
+  
   return (
     <>
       <div className={styles.wrap}>
